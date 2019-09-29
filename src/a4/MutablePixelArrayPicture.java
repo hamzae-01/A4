@@ -25,6 +25,12 @@ public class MutablePixelArrayPicture implements Picture{
 		this._width = width;
 		this._height = height;
 		this._pixel_array = new Pixel[width][height];
+		
+		for (int h =0; h < _pixel_array.length; h++) {
+			for (int g =0; g < _pixel_array[h].length; g++) {
+				_pixel_array[h][g] = new GrayPixel(0.5);
+			}
+		}
 	}
 
 	@Override
@@ -61,45 +67,47 @@ public class MutablePixelArrayPicture implements Picture{
 
 	@Override
 	public Picture paint(int ax, int ay, int bx, int by, Pixel p) {
-		for (int k = ax; k< bx ; k++) {
+		Picture _fourth = this;
+		for (int k = ax; k <= bx ; k++) {
 			for (int m = ay; m < by; m++) {
-				paint(k, m, p);
+				_fourth.paint(k, m, p);
 			}
 		}
-		return this;
+		return _fourth;
 	}
 
 	
 	public Picture paint(int ax, int ay, int bx, int by, Pixel p, double factor) {
-		
+		Picture _first = this;
 		for (int k = ax; k< bx ; k++) {
 			for (int m = ay; m < by; m++) {
-				paint(k, m, p, factor);
+				_first.paint(k, m, p, factor);
 				//Pixel blend2 = _pixel_array [k][m].blend(p, factor);
 			}
 		}
-		return this;
+		return _first;
 	}
 
 	@Override
 	public Picture paint(int cx, int cy, double radius, Pixel p) {
-		// TODO Auto-generated method stub
+		Picture _second = this;
 		for (int u = cx; u < radius; u++) {
 			for (int l = cy; l < radius; l++) {
-				paint(u, l, p);
+				_second.paint(u, l, p);
 		}
 		}
-		return this;
+		return _second;
 	}
 
 	@Override
 	public Picture paint(int cx, int cy, double radius, Pixel p, double factor) {
+		Picture _third = this;
 		for (int u = cx; u < radius; u++) {
 			for (int l = cy; l < radius; l++) {
-				paint(u, l, p, factor);
+				_third.paint(u, l, p, factor);
 			}
 		}
-		return this;
+		return _third;
 	}
 
 }
