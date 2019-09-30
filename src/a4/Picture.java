@@ -117,8 +117,9 @@ public interface Picture {
 			throw new IllegalArgumentException();
 		}
 		Picture _second = this;
-		for (int u = cx; u < radius; u++) {
-			for (int l = cy; l < radius; l++) {
+		
+		for (int u = 0; u < getWidth(); u++) {
+			for (int l = 0; l < getHeight(); l++) {
 				if (Math.sqrt((u - cx) * (u - cx) + (l - cy) * (l - cy)) <= radius) {
 					_second = _second.paint(u, l, p);
 				}
