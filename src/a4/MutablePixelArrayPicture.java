@@ -80,14 +80,18 @@ public class MutablePixelArrayPicture implements Picture {
 
 	@Override
 	public Picture paint(int x, int y, Pixel p) {
-
+		if (x < 0 || x>= _width || y < 0 || y>= _height) {
+			throw new IllegalArgumentException();
+		}
 		_pixel_array[x][y] = p;
 		return this;
 	}
 
 	@Override
 	public Picture paint(int x, int y, Pixel p, double factor) {
-
+		if (x < 0 || x>= _width || y < 0 || y>= _height) {
+			throw new IllegalArgumentException();
+		}
 		Pixel blend = _pixel_array[x][y].blend(p, factor);
 		return paint(x, y, blend);
 	}
@@ -96,7 +100,7 @@ public class MutablePixelArrayPicture implements Picture {
 	public Picture paint(int ax, int ay, int bx, int by, Pixel p) {
 		Picture _fourth = this;
 		for (int k = ax; k <= bx; k++) {
-			for (int m = ay; m < by; m++) {
+			for (int m = ay; m <= by; m++) {
 				_fourth.paint(k, m, p);
 			}
 		}
@@ -120,7 +124,9 @@ public class MutablePixelArrayPicture implements Picture {
 		Picture _second = this;
 		for (int u = cx; u < radius; u++) {
 			for (int l = cy; l < radius; l++) {
+				if (Math.sqrt((u-cx)*(u-cx)+(l-cy)*(l-cy)) <= radius) {
 				_second.paint(u, l, p);
+				}
 			}
 		}
 		return _second;
@@ -131,7 +137,9 @@ public class MutablePixelArrayPicture implements Picture {
 		Picture _third = this;
 		for (int u = cx; u < radius; u++) {
 			for (int l = cy; l < radius; l++) {
+				if (Math.sqrt((u-cx)*(u-cx)+(l-cy)*(l-cy)) <= radius) {
 				_third.paint(u, l, p, factor);
+				}
 			}
 		}
 		return _third;
