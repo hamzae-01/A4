@@ -40,13 +40,13 @@ public class MonochromePicture implements Picture {
 		return _value;
 	}
 
-	@Override
+	/*@Override
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
 
 		return null;
 	}
-
+*/
 	@Override
 	public Picture paint(int x, int y, Pixel p, double factor) {
 		if (x < 0 || x>= _width || y < 0 || y>= _height) {
@@ -62,7 +62,7 @@ public class MonochromePicture implements Picture {
 		Picture _first = new MutablePixelArrayPicture(_width, _height, _value);
 		return _first.paint(x, y, p, factor);
 	}
-	@Override
+	/*@Override
 	public Picture paint(int ax, int ay, int bx, int by, Pixel p) {
 		Picture _fourth = this;
 		for (int k = ax; k <= bx; k++) {
@@ -110,5 +110,5 @@ public class MonochromePicture implements Picture {
 		}
 		return _third;
 	}
-
+*/
 }

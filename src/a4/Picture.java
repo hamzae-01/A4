@@ -30,7 +30,9 @@ public interface Picture {
 	// the value with the specified pixel value. Values between
 	// 0.0 and 1.0 blend proportionally.
 	
-	public Picture paint(int x, int y, Pixel p);
+	default public Picture paint(int x, int y, Pixel p) {
+		return paint(x,y,p,1.0);
+	}
 	public Picture paint(int x, int y, Pixel p, double factor);
 	
 	
@@ -39,8 +41,54 @@ public interface Picture {
 	// (bx, by) with the specified pixel value. The second form
 	// should blend with the specified factor as previously described.
 	
-	public Picture paint(int ax, int ay, int bx, int by, Pixel p);
-	public Picture paint(int ax, int ay, int bx, int by, Pixel p, double factor);
+	default public Picture paint(int ax, int ay, int bx, int by, Pixel p) {
+		return paint(ax,ay,bx,by,p,1.0);
+	}
+	default public Picture paint(int ax, int ay, int bx, int by, Pixel p, double factor) {
+		if (ax < 0 || ax>= getWidth() || ay < 0 || ay>= getHeight()) {
+			throw new IllegalArgumentException();
+		}
+		if (bx < 0 || bx>= getWidth() || by < 0 || by>= getHeight()) {
+			throw new IllegalArgumentException();
+		}
+		if (p==null) {
+			throw new IllegalArgumentException();
+		}
+		if (factor < 0 || factor > 1.0) {
+			throw new IllegalArgumentException();
+		}
+		/*int min_x;
+		int max_x;
+		int min_y;
+		int max_y;
+		if (ax<bx) {
+			min_x = ax;
+					max_x = bx;
+		}else {
+			min_x = bx;
+			max_x = ax;
+		}
+		if (ay<by) {
+			min_y = ay;
+					max_y = by;
+		}else {
+			min_y = by;
+			max_y = ay;
+		}
+		Picture _first = this;
+		for (int x=min_x; x<max_x; x++) {
+			for (int y=min_y; y<max_y; y++) {
+				_first=_first.paint(x,y,p,factor);
+			}
+		}*/
+		Picture _fourth = this;
+		for (int k = ax; k <= bx; k++) {
+			for (int m = ay; m <= by; m++) {
+				_fourth = _fourth.paint(k, m, p, factor);
+			}
+		}
+		return _fourth;
+	}
 
 	// paint(int cx, int cy, double radius, Pixel p) sets all pixels in the
 	// picture that are within radius distance of the coordinate (cx, cy) to the
@@ -53,7 +101,30 @@ public interface Picture {
 
 	// The second form with factor, blends as previously described.
 	
-	public Picture paint(int cx, int cy, double radius, Pixel p);
-	public Picture paint(int cx, int cy, double radius, Pixel p, double factor);
-	
+	default public Picture paint(int cx, int cy, double radius, Pixel p) {
+		return paint(cx,cy,radius,p,1.0);
+		
+	}
+
+	default public Picture paint(int cx, int cy, double radius, Pixel p, double factor) {
+		if (radius < 0) {
+			throw new IllegalArgumentException();
+		}
+		if (p == null) {
+			throw new IllegalArgumentException();
+		}
+		if (factor < 0 || factor > 1.0) {
+			throw new IllegalArgumentException();
+		}
+		Picture _second = this;
+		for (int u = cx; u < radius; u++) {
+			for (int l = cy; l < radius; l++) {
+				if (Math.sqrt((u - cx) * (u - cx) + (l - cy) * (l - cy)) <= radius) {
+					_second = _second.paint(u, l, p);
+				}
+			}
+
+		}
+		return _second;
+	}
 }

@@ -75,12 +75,12 @@ public class MutablePixelArrayPicture implements Picture {
 	@Override
 	public Pixel getPixel(int x, int y) {
 		if (x < 0 || x>= _width || y < 0 || y>= _height) {
-			
+			throw new IllegalArgumentException();
 		}
 		return _pixel_array[x][y];
 	}
 
-	@Override
+	/*@Override
 	public Picture paint(int x, int y, Pixel p) {
 		if (x < 0 || x>= _width || y < 0 || y>= _height) {
 			throw new IllegalArgumentException();
@@ -88,7 +88,7 @@ public class MutablePixelArrayPicture implements Picture {
 		_pixel_array[x][y] = p;
 		return this;
 	}
-
+*/
 	@Override
 	public Picture paint(int x, int y, Pixel p, double factor) {
 		if (x < 0 || x>= _width || y < 0 || y>= _height) {
@@ -100,11 +100,11 @@ public class MutablePixelArrayPicture implements Picture {
 		if (factor < 0 || factor > 1.0) {
 			throw new IllegalArgumentException();
 		}
-		Pixel blend = _pixel_array[x][y].blend(p, factor);
-		return paint(x, y, blend);
+		_pixel_array[x][y] = _pixel_array[x][y].blend(p, factor);
+		return this;
 	}
 
-	@Override
+	/*@Override
 	public Picture paint(int ax, int ay, int bx, int by, Pixel p) {
 		Picture _fourth = this;
 		for (int k = ax; k <= bx; k++) {
@@ -152,5 +152,5 @@ public class MutablePixelArrayPicture implements Picture {
 		}
 		return _third;
 	}
-
+*/
 }
