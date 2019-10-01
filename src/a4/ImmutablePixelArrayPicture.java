@@ -93,7 +93,14 @@ public class ImmutablePixelArrayPicture implements Picture {
 			throw new IllegalArgumentException();
 		}
 		
-		return (new MutablePixelArrayPicture(_pixel_array)).paint(x, y, p);
+		Pixel[][] pixArray = new Pixel[_width][_height];
+		for (int r = 0; r < _width; r++){
+			for (int e = 0; e < _height; e++){
+				pixArray [r][e]=_pixel_array[r][e];
+			}
+		}
+		
+		return (new MutablePixelArrayPicture(pixArray)).paint(x, y, p);
 	}
 
 }

@@ -1,6 +1,5 @@
 package a4;
 
-
 public class VerticalStackPicture implements Picture {
 	
 	Picture Top;
@@ -8,10 +7,10 @@ public class VerticalStackPicture implements Picture {
 	
 	public VerticalStackPicture(Picture top, Picture bottom) {
 		if (top == null || bottom == null) {
-			throw new IllegalArgumentException("The values of top or bottom can not be null");
+			throw new IllegalArgumentException();
 		}
 		if (top.getWidth() != bottom.getWidth()) {
-			throw new IllegalArgumentException("The Widths of the pictures are not the same");
+			throw new IllegalArgumentException();
 		}
 		this.Bottom = bottom;
 		this.Top = top;
@@ -32,7 +31,9 @@ public class VerticalStackPicture implements Picture {
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-
+		if (x > Top.getWidth() + Bottom.getWidth()) {
+			throw new IllegalArgumentException();
+		}
 		if (y >= Top.getHeight()) {
 			y = y - Top.getHeight();
 			return Bottom.getPixel(x, y);
@@ -53,10 +54,10 @@ public class VerticalStackPicture implements Picture {
 		if (factor < 0 || factor > 1.0) {
 			throw new IllegalArgumentException();	
 	}
-		if (x< Top.getWidth()) {
+		if (y < Top.getHeight()) {
 			Top = Top.paint(x,y,p,factor);
 		}else {
-			Bottom = Bottom.paint(x-Top.getWidth(), y, p, factor);
+			Bottom = Bottom.paint(x, y-Top.getHeight(), p, factor);
 		}
 		
 		return this;
