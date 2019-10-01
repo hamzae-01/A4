@@ -76,6 +76,7 @@ public class GradientPicture implements Picture {
 		
 		double factor = ((double) y) / ((double) (_height - 1));
 		
+		
 		Pixel begRow = _upperLeft.blend(_lowerLeft, factor);
 		Pixel endRow = _upperRight.blend(_lowerRight, factor);
 		
