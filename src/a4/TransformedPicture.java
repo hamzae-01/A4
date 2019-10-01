@@ -2,13 +2,13 @@ package a4;
 
 public class TransformedPicture extends ImmutablePixelArrayPicture {
 
-	private Picture source;
-	private PixelTransformation xform;
+	private Picture _source;
+	private PixelTransformation x_form;
 	
 	public TransformedPicture(Picture source, PixelTransformation xform){
 	super(source.getWidth(), source.getHeight());
-	this.source = source;
-	this.xform = xform;
+	this._source = source;
+	this.x_form = xform;
 	}
 	
 
@@ -21,8 +21,8 @@ public class TransformedPicture extends ImmutablePixelArrayPicture {
 
 	
 	public Pixel getPixel(int x, int y) {
-	  Pixel p = source.getPixel(x, y);
-	  return xform.transform(p);
+	  Pixel p = _source.getPixel(x, y);
+	  return x_form.transform(p);
 	}
 
 

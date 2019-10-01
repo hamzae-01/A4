@@ -2,14 +2,14 @@ package a4;
 
 public class Threshold implements PixelTransformation {
 
-	private double threshold;
+	private double _threshold;
 
 	public Threshold(double threshold) {
-		this.threshold = threshold;
+		this._threshold = threshold;
 	}
 
 	public Pixel transform(Pixel p) {
-		if (p.getIntensity() > threshold) {
+		if (p.getIntensity() > _threshold) {
 			p = new ColorPixel(1.0, 1.0, 1.0);
 			return p;
 		} else {
