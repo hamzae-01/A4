@@ -24,6 +24,7 @@ public class GradientPicture implements Picture {
 		this._upperRight = upper_right;
 		this._lowerLeft = lower_left;
 		this._lowerRight = lower_right;
+	}
 
 	/*	_pixel_array = new Pixel[_width][_height];
 		for (int y = 0; y < _height; y++) {
@@ -53,7 +54,7 @@ public class GradientPicture implements Picture {
 
 		this._picture = new ImmutablePixelArrayPicture(_pixel_array);
 */
-	}
+	
 
 	@Override
 	public int getWidth() {
